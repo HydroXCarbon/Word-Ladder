@@ -14,12 +14,11 @@ import java.util.stream.Collectors;
 public class DataSet {
     private final SimpleWeightedGraph<String, DefaultWeightedEdge> graph = new SimpleWeightedGraph<>(DefaultWeightedEdge.class);
 
-
     public void addData(String data) {
         if (data == null || data.isEmpty()) {
             return;
         }
-        graph.addVertex(data);
+        graph.addVertex(data.toLowerCase());
     }
 
     public void connectVertices() {

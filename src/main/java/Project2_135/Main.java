@@ -23,6 +23,7 @@ public class Main {
                 fileFound = true;
                 fileScanner.close();
             } catch (Exception e) {
+                System.out.println("File not found.");
             }
         }
 
@@ -98,7 +99,7 @@ public class Main {
 
         // Check existing word in DataSet
         if (!((set.regularExpression(word1).size() == 1 || set.regularExpression(word2).size() == 1) && (word1!=word2))) {
-            System.out.printf("\nCannot transform %s into %s\n", word1, word2);
+            System.out.printf("\nCannot transform %s into %s (Cannot find word)\n", word1, word2);
             return;
         }
 
@@ -107,7 +108,7 @@ public class Main {
 
         // Verify path
         if (graph == null) {
-            System.out.printf("\nCannot transform %s into %s\n", word1, word2);
+            System.out.printf("\nCannot transform %s into %s (Cannot find path)\n", word1, word2);
             return;
         }
 
