@@ -2,19 +2,21 @@ package Project2_135;
 
 
 import org.jgrapht.GraphPath;
-import org.jgrapht.alg.shortestpath.BFSShortestPath;
-import org.jgrapht.graph.DefaultEdge;
-import org.jgrapht.graph.SimpleGraph;
+import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
+import org.jgrapht.graph.DefaultWeightedEdge;
+import org.jgrapht.graph.SimpleWeightedGraph;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 public class DataSet {
-    private final SimpleGraph<String, DefaultEdge> graph = new SimpleGraph<>(DefaultEdge.class);
+    private final SimpleWeightedGraph<String, DefaultWeightedEdge> graph = new SimpleWeightedGraph<>(DefaultWeightedEdge.class);
 
 
-    public void addData(String data){
-        if(data == null || data.isEmpty()){
+    public void addData(String data) {
+        if (data == null || data.isEmpty()) {
             return;
         }
         graph.addVertex(data);
@@ -24,27 +26,35 @@ public class DataSet {
         List<String> vertices = new ArrayList<>(graph.vertexSet());
         for (int i = 0; i < vertices.size(); i++) {
             for (int j = i + 1; j < vertices.size(); j++) {
+                int cost = 0;
                 String vertex1 = vertices.get(i);
                 String vertex2 = vertices.get(j);
-                if (isOneCharDiffOrShifted(vertex1, vertex2)) {
-                    graph.addEdge(vertex1, vertex2);
+                int flag = isOneCharDiffOrPermutation(vertex1, vertex2);
+                if (flag != -1) {
+                    DefaultWeightedEdge edge = graph.addEdge(vertex1, vertex2);
+
+                    if (flag == 1) {
+                        cost = findCost(vertex1, vertex2);
+                    }
+
+                    if (edge != null) {
+                        graph.setEdgeWeight(edge, cost);
+                    }
                 }
             }
         }
     }
 
-    public List<String> findShortestPath(String startVertex, String targetVertex) {
-        BFSShortestPath<String, DefaultEdge> bfs = new BFSShortestPath<>(graph);
-        GraphPath<String, DefaultEdge> path = bfs.getPath(startVertex, targetVertex);
-
-        if (path == null) {
-            return Collections.emptyList();
-        }
-
-        return path.getVertexList();
+    public int getEdgeWeight(DefaultWeightedEdge edge) {
+        return (int) graph.getEdgeWeight(edge);
     }
 
-    public int findCost(String word1, String word2){
+    public GraphPath<String, DefaultWeightedEdge> findShortestPath(String startVertex, String targetVertex) {
+        DijkstraShortestPath<String, DefaultWeightedEdge> path = new DijkstraShortestPath<>(graph);
+        return path.getPath(startVertex, targetVertex);
+    }
+
+    public int findCost(String word1, String word2) {
         int i;
         for (i = 0; i < word1.length(); i++) {
             if (Character.toLowerCase(word1.charAt(i)) != Character.toLowerCase(word2.charAt(i))) {
@@ -54,8 +64,29 @@ public class DataSet {
         return Math.abs(Character.toLowerCase(word1.charAt(i)) - Character.toLowerCase(word2.charAt(i)));
     }
 
+    private boolean isPermutation(String word1, String word2) {
+        int[] count = new int[26];
+        for (int i = 0; i < word1.length(); i++) {
+            count[word1.charAt(i) - 'a']++;
+            count[word2.charAt(i) - 'a']--;
+        }
 
-    public int isOneCharDiffOrShifted(String word1, String word2) {
+        for (int i = 0; i < 26; i++) {
+            if (count[i] != 0) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+
+    public int isOneCharDiffOrPermutation(String word1, String word2) {
+
+        // Check permutation
+        if (isPermutation(word1, word2)) {
+            return 2;
+        }
 
         // Check one char diff
         int diffCount = 0;
@@ -68,22 +99,12 @@ public class DataSet {
         if (diffCount == 1) {
             return 1;
         }
-
-        // Check left shift
-        String leftShiftedWord1 = word1.substring(1) + word1.charAt(0);
-
-        // Check right shift
-        String rightShiftedWord1 = word1.charAt(word1.length() - 1) + word1.substring(0, word1.length() - 1);
-
-        if(leftShiftedWord1.equals(word2) || rightShiftedWord1.equals(word2)){
-            return 2;
-        }
         return -1;
     }
 
-    public Set<String> regularExpression(String regex){
-        return graph.vertexSet().stream()
-                .filter(s -> s.toLowerCase().startsWith(regex.toLowerCase()))
-                .collect(Collectors.toSet());
+    public Set<String> regularExpression(String regex) {
+        return graph.vertexSet().stream().filter(s -> s.toLowerCase().startsWith(regex.toLowerCase())).collect(Collectors.toSet());
     }
 }
+
+
