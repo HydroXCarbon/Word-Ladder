@@ -8,7 +8,6 @@ import java.util.*;
 import java.util.stream.Collectors;
 
 public class DataSet {
-    private final TreeSet<String> set = new TreeSet<String>();
     private final SimpleGraph<String, DefaultEdge> graph = new SimpleGraph<>(DefaultEdge.class);
 
 
@@ -16,13 +15,12 @@ public class DataSet {
         if(data == null || data.isEmpty()){
             return;
         }
-        set.add(data);
         graph.addVertex(data);
     }
 
     public void connectVertices() {
-        for (String vertex1 : set) {
-            for (String vertex2 : set) {
+        for (String vertex1 : graph.vertexSet()) {
+            for (String vertex2 : graph.vertexSet()) {
                 if (!vertex1.equals(vertex2) && isOneCharDiffOrShifted(vertex1, vertex2)) {
                     graph.addEdge(vertex1, vertex2);
                 }
@@ -54,7 +52,7 @@ public class DataSet {
     }
 
     public Set<String> regularExpression(String regex){
-        return set.stream()
+        return graph.vertexSet().stream()
                 .filter(s -> s.toLowerCase().startsWith(regex.toLowerCase()))
                 .collect(Collectors.toSet());
     }
