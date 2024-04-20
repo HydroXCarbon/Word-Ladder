@@ -1,5 +1,6 @@
 package Project2_135;
 
+
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 
@@ -46,7 +47,7 @@ public class DataSet {
 
     public Set<String> regularExpression(String regex){
         return set.stream()
-                .filter(s -> s.matches(regex))
+                .filter(s -> s.toLowerCase().startsWith(regex.toLowerCase()))
                 .collect(Collectors.toSet());
     }
 }
