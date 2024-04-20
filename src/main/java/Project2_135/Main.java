@@ -42,6 +42,7 @@ public class Main {
             }
         }
         System.out.println();
+        scanner.close();
     }
 
     public static void storeData(Scanner fileScanner, DataSet set){
@@ -49,6 +50,7 @@ public class Main {
             String col = fileScanner.nextLine().trim();
             set.addData(col);
         }
+        set.connectVertices();
     }
 
     public static void Search(DataSet set){
@@ -62,6 +64,25 @@ public class Main {
     }
 
     public static void Ladder(DataSet set){
+        Scanner scanner = new Scanner(System.in);
+        String word1 = "";
+        String word2 = "";
+        while(word1.length() != 5) {
+            System.out.println("Enter 5 letter word 1 = ");
+            word1 = scanner.nextLine();
+        }
+
+        while(word2.length() != 5) {
+            System.out.println("Enter 5 letter word 2 = ");
+            word2 = scanner.nextLine();
+        }
+
+        // Check existing word in DataSet
+        if(!(set.regularExpression(word1).size() != 1 || set.regularExpression(word2).size() != 1)){
+            System.out.printf("Cannot transform %s into %s\n",word1, word2);
+            return;
+        }
+
 
     }
 }
