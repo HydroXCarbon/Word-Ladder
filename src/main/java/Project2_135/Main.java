@@ -94,12 +94,11 @@ public class Main {
             word2 = scanner.nextLine().toLowerCase();
         }
 
-        System.out.println();
-        System.out.println(word1);
+
 
         // Check existing word in DataSet
-        if (!(set.regularExpression(word1).size() == 1 || set.regularExpression(word2).size() == 1)) {
-            System.out.printf("Cannot transform %s into %s\n", word1, word2);
+        if (!((set.regularExpression(word1).size() == 1 || set.regularExpression(word2).size() == 1) && (word1!=word2))) {
+            System.out.printf("\nCannot transform %s into %s\n", word1, word2);
             return;
         }
 
@@ -107,8 +106,8 @@ public class Main {
         GraphPath<String, DefaultWeightedEdge> graph = set.findShortestPath(word1, word2);
 
         // Verify path
-        if (graph.getVertexList().size() < 2) {
-            System.out.printf("Cannot transform %s into %s\n", word1, word2);
+        if (graph == null) {
+            System.out.printf("\nCannot transform %s into %s\n", word1, word2);
             return;
         }
 
@@ -116,9 +115,12 @@ public class Main {
         List<String> vertices = graph.getVertexList();
         List<DefaultWeightedEdge> edge = graph.getEdgeList();
 
+        System.out.println();
+        System.out.println(word1);
+
         // Loop print vertices and weight
-        for (int i = 0; i < vertices.size() - 1; i++) {
-            cost = set.getEdgeWeight(edge.get(i));
+        for (int i = 1; i < vertices.size() ; i++) {
+            cost = set.getEdgeWeight(edge.get(i-1));
             if (cost > 0) {
                 System.out.printf("%s (ladder   + %d)\n", vertices.get(i), cost);
             } else if (cost == 0) {
