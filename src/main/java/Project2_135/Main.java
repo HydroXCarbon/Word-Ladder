@@ -4,6 +4,9 @@ import java.io.File;
 import java.util.Locale;
 import java.util.Scanner;
 import java.util.Set;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 
 public class Main {
     public static void main(String[] args) {
@@ -58,9 +61,18 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         String regex = scanner.nextLine();
         Set<String> filteredSet = set.regularExpression(regex);
+        //System.out.println("Number of matches: " + filteredSet.size());
+        System.out.println("=== Available words ===");
+        int counter = 0;
         for(String each : filteredSet){
-            System.out.print(each);
+            System.out.print(each + "       ");
+            counter++;
+            if(counter == 10){
+                System.out.println();
+                counter = 0;
+            }
         }
+        System.out.println();
     }
 
     public static void Ladder(DataSet set){
