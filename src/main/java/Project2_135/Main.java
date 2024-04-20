@@ -1,11 +1,7 @@
 package Project2_135;
 
 import java.io.File;
-import java.util.Scanner;
-import java.util.Set;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.*;
 
 public class Main {
     public static void main(String[] args) {
@@ -60,10 +56,11 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         String regex = scanner.nextLine();
         Set<String> filteredSet = set.regularExpression(regex);
-        //System.out.println("Number of matches: " + filteredSet.size());
         System.out.println("=== Available words ===");
         int counter = 0;
-        for(String each : filteredSet){
+        List<String> list = new ArrayList<>(filteredSet);
+        Collections.sort(list);
+        for(String each : list){
             System.out.print(each + "       ");
             counter++;
             if(counter == 10){
@@ -89,10 +86,11 @@ public class Main {
         }
 
         // Check existing word in DataSet
-        if(!(set.regularExpression(word1).size() != 1 || set.regularExpression(word2).size() != 1)){
+        if(!(set.regularExpression(word1).size() == 1 || set.regularExpression(word2).size() == 1)){
             System.out.printf("Cannot transform %s into %s\n",word1, word2);
             return;
         }
+
 
 
     }
