@@ -21,9 +21,12 @@ public class DataSet {
     }
 
     public void connectVertices() {
-        for (String vertex1 : graph.vertexSet()) {
-            for (String vertex2 : graph.vertexSet()) {
-                if (!vertex1.equals(vertex2) && (isOneCharDiffOrShifted(vertex1, vertex2) != 0)) {
+        List<String> vertices = new ArrayList<>(graph.vertexSet());
+        for (int i = 0; i < vertices.size(); i++) {
+            for (int j = i + 1; j < vertices.size(); j++) {
+                String vertex1 = vertices.get(i);
+                String vertex2 = vertices.get(j);
+                if (isOneCharDiffOrShifted(vertex1, vertex2)) {
                     graph.addEdge(vertex1, vertex2);
                 }
             }
