@@ -1,6 +1,8 @@
 package Project2_135;
 
 
+import org.jgrapht.GraphPath;
+import org.jgrapht.alg.shortestpath.BFSShortestPath;
 import org.jgrapht.graph.DefaultEdge;
 import org.jgrapht.graph.SimpleGraph;
 
@@ -21,14 +23,36 @@ public class DataSet {
     public void connectVertices() {
         for (String vertex1 : graph.vertexSet()) {
             for (String vertex2 : graph.vertexSet()) {
-                if (!vertex1.equals(vertex2) && isOneCharDiffOrShifted(vertex1, vertex2)) {
+                if (!vertex1.equals(vertex2) && (isOneCharDiffOrShifted(vertex1, vertex2) != 0)) {
                     graph.addEdge(vertex1, vertex2);
                 }
             }
         }
     }
 
-    private boolean isOneCharDiffOrShifted(String word1, String word2) {
+    public List<String> findShortestPath(String startVertex, String targetVertex) {
+        BFSShortestPath<String, DefaultEdge> bfs = new BFSShortestPath<>(graph);
+        GraphPath<String, DefaultEdge> path = bfs.getPath(startVertex, targetVertex);
+
+        if (path == null) {
+            return Collections.emptyList();
+        }
+
+        return path.getVertexList();
+    }
+
+    public int findCost(String word1, String word2){
+        int i;
+        for (i = 0; i < word1.length(); i++) {
+            if (Character.toLowerCase(word1.charAt(i)) != Character.toLowerCase(word2.charAt(i))) {
+                break;
+            }
+        }
+        return Math.abs(Character.toLowerCase(word1.charAt(i)) - Character.toLowerCase(word2.charAt(i)));
+    }
+
+
+    public int isOneCharDiffOrShifted(String word1, String word2) {
 
         // Check one char diff
         int diffCount = 0;
@@ -39,7 +63,7 @@ public class DataSet {
         }
 
         if (diffCount == 1) {
-            return true;
+            return 1;
         }
 
         // Check left shift
@@ -48,7 +72,10 @@ public class DataSet {
         // Check right shift
         String rightShiftedWord1 = word1.charAt(word1.length() - 1) + word1.substring(0, word1.length() - 1);
 
-        return leftShiftedWord1.equals(word2) || rightShiftedWord1.equals(word2);
+        if(leftShiftedWord1.equals(word2) || rightShiftedWord1.equals(word2)){
+            return 2;
+        }
+        return -1;
     }
 
     public Set<String> regularExpression(String regex){
