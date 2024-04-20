@@ -1,6 +1,5 @@
 package Project2_135;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.TreeSet;
 import java.util.stream.Collectors;
@@ -14,7 +13,7 @@ public class DataSet {
 
     public Set<String> regularExpression(String regex){
         return set.stream()
-                .filter(s -> s.matches(regex))
+                .filter(s -> s.toLowerCase().startsWith(regex.toLowerCase()))
                 .collect(Collectors.toSet());
     }
 }
