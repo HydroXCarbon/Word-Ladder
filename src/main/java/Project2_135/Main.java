@@ -61,6 +61,10 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         String regex = scanner.nextLine();
         Set<String> filteredSet = set.regularExpression(regex);
+        if(filteredSet.size() == 0){
+            System.out.println("Word not found!!");
+            return;
+        }
         System.out.println("=== Available words ===");
         int counter = 0;
         List<String> list = new ArrayList<>(filteredSet);
@@ -95,14 +99,13 @@ public class Main {
             word2 = scanner.nextLine().toLowerCase();
         }
 
-
         // Check existing word in DataSet
         if (!((set.regularExpression(word1).size() == 1 || set.regularExpression(word2).size() == 1) && (word1!=word2))) {
             System.out.printf("\nCannot transform %s into %s (Cannot find word)\n", word1, word2);
             return;
         }
 
-        // Get shortest path
+        // Get the shortest path
         GraphPath<String, DefaultWeightedEdge> graph = set.findShortestPath(word1, word2);
 
         // Verify path
