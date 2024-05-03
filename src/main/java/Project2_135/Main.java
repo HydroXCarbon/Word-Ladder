@@ -40,11 +40,21 @@ public class Main {
                 case "l":
                     Ladder(set);
                     break;
+                case "c":
+                    CheckEdge(set);
+                    break;
                 default:
             }
         }
         System.out.println();
         scanner.close();
+    }
+
+    public static void CheckEdge(DataSet set){
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Select node to show data: ");
+        String userInput = scanner.nextLine();
+        System.out.println(set.getEdge(userInput));
     }
 
     public static void storeData(Scanner fileScanner, DataSet set) {

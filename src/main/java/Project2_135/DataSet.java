@@ -105,6 +105,10 @@ public class DataSet {
     public Set<String> regularExpression(String regex) {
         return graph.vertexSet().stream().filter(s -> s.toLowerCase().startsWith(regex.toLowerCase())).collect(Collectors.toSet());
     }
+
+    public Set<DefaultWeightedEdge> getEdge(String node) {
+        return graph.edgesOf(node);
+    }
 }
 
 
