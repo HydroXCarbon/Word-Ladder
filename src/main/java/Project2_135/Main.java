@@ -95,7 +95,7 @@ public class Main {
             word2 = scanner.nextLine().toLowerCase();
         }
 
-        
+
         // Check existing word in DataSet
         if (!((set.regularExpression(word1).size() == 1 || set.regularExpression(word2).size() == 1) && (word1!=word2))) {
             System.out.printf("\nCannot transform %s into %s (Cannot find word)\n", word1, word2);
