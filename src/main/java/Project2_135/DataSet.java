@@ -7,6 +7,7 @@ import org.jgrapht.graph.DefaultWeightedEdge;
 import org.jgrapht.graph.SimpleWeightedGraph;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
@@ -63,18 +64,18 @@ public class DataSet {
         return Math.abs(Character.toLowerCase(word1.charAt(i)) - Character.toLowerCase(word2.charAt(i)));
     }
 
-    private boolean isPermutation(String word1, String word2) {
-        int[] count = new int[26];
-        for (int i = 0; i < word1.length(); i++) {
-            count[word1.charAt(i) - 'a']++;
-            count[word2.charAt(i) - 'a']--;
-        }
+    private boolean arePermutation(String word1, String word2) {
+        char ch1[] = word1.toCharArray();
+        char ch2[] = word2.toCharArray();
 
-        for (int i = 0; i < 26; i++) {
-            if (count[i] != 0) {
+        // Sort both strings
+        Arrays.sort(ch1);
+        Arrays.sort(ch2);
+
+        // Compare sorted strings
+        for (int i = 0; i < 5; i++)
+            if (ch1[i] != ch2[i])
                 return false;
-            }
-        }
 
         return true;
     }
@@ -83,7 +84,7 @@ public class DataSet {
     public int isOneCharDiffOrPermutation(String word1, String word2) {
 
         // Check permutation
-        if (isPermutation(word1, word2)) {
+        if (arePermutation(word1, word2)) {
             return 2;
         }
 
