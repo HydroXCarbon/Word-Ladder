@@ -61,7 +61,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         String regex = scanner.nextLine();
         Set<String> filteredSet = set.regularExpression(regex);
-        if(filteredSet.size() == 0){
+        if(filteredSet.isEmpty()){
             System.out.println("Word not found!!");
             return;
         }
