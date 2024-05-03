@@ -99,13 +99,13 @@ public class Main {
 
         // Receive input from user
         while (word1.length() != 5) {
-            System.out.println("Enter 5 letter word 1 = ");
+            System.out.println("Enter 5 letter word 1 (Source word) = ");
             word1 = scanner.nextLine().toLowerCase();
         }
 
         // Receive input from user
         while (word2.length() != 5) {
-            System.out.println("Enter 5 letter word 2 = ");
+            System.out.println("Enter 5 letter word 2 (Target word)= ");
             word2 = scanner.nextLine().toLowerCase();
         }
 
