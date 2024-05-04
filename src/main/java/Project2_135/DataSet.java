@@ -30,6 +30,8 @@ public class DataSet {
                 String vertex1 = vertices.get(i);
                 String vertex2 = vertices.get(j);
                 int flag = isOneCharDiffOrPermutation(vertex1, vertex2);
+
+                // flag 2 = Permutation, 1 = One Char Diff, -1 = No any condition meet
                 if (flag != -1) {
                     DefaultWeightedEdge edge = graph.addEdge(vertex1, vertex2);
 

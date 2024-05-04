@@ -98,21 +98,39 @@ public class Main {
         String word2 = "";
 
         // Receive input from user
-        while (word1.length() != 5) {
+        while (true) {
             System.out.println("Enter 5 letter word 1 (Source word) = ");
             word1 = scanner.nextLine().toLowerCase();
+
+            if(word1.length() != 5){
+                System.out.println("Please enter 5 character word.");
+            }
+
+            if(set.regularExpression(word1).size() == 1){
+                break;
+            }
+
+            System.out.println("Word not found please enter new word.");
         }
 
         // Receive input from user
-        while (word2.length() != 5) {
-            System.out.println("Enter 5 letter word 2 (Target word)= ");
+        while (true) {
+            System.out.println("Enter 5 letter word 2 (Target word) = ");
             word2 = scanner.nextLine().toLowerCase();
-        }
 
-        // Check existing word in DataSet
-        if (!((set.regularExpression(word1).size() == 1 || set.regularExpression(word2).size() == 1) && (word1!=word2))) {
-            System.out.printf("\nCannot transform %s into %s (Cannot find word)\n", word1, word2);
-            return;
+            if(word2.length() != 5){
+                System.out.println("Please enter 5 character word.");
+            }
+
+            if(word2.equals(word1)){
+                System.out.println("Can not use same word please enter new word.");
+            }
+            
+            if(set.regularExpression(word2).size() == 1){
+                break;
+            }
+
+            System.out.println("Word not found please enter new word.");
         }
 
         // Get the shortest path
@@ -143,7 +161,6 @@ public class Main {
         }
 
         System.out.printf("\nTransformation cost = %d\n", totalCost);
-
 
     }
 }
