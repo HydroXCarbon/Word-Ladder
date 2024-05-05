@@ -1,5 +1,10 @@
 package Project2_135;
 
+//นายธนกฤต ชุติวงศ์ธนะพัฒน์ 	    6513112
+//นายภูรินท์ พงษ์พานิช			6513135
+//นายจารุภัทร โชติสิทธานันท์		6513161
+//นางสาวชลิษา บัวทอง			6513163
+
 import org.jgrapht.GraphPath;
 import org.jgrapht.graph.DefaultWeightedEdge;
 
@@ -125,7 +130,7 @@ public class Main {
             if(word2.equals(word1)){
                 System.out.println("Can not use same word please enter new word.");
             }
-            
+
             if(set.regularExpression(word2).size() == 1){
                 break;
             }
